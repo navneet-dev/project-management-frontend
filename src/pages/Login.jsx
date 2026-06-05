@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import instance from "../axios.js";
 
 function Login() {
@@ -7,6 +7,8 @@ function Login() {
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState("");
     const [loading, setLoading] = useState(false);
+
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -24,7 +26,9 @@ function Login() {
             // console.log("User data:", response.data.user);
 
             setMessage("Login successful!");
+
             // You can redirect the user or perform other actions here
+            navigate("/dashboard");
         } catch (error) {
             // console.error(
             //     "Login failed:",
