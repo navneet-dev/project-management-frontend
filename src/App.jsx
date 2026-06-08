@@ -11,6 +11,9 @@ import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import ProtectedRoute from "./components/ProtectedRoute.jsx";
+import Projects from "./pages/Projects.jsx";
+import AddProject from "./pages/AddProject.jsx";
+import EditProject from "./pages/EditProject.jsx";
 // import Projects from "./pages/Projects.jsx";
 // import Tasks from "./pages/Tasks.jsx";
 
@@ -34,6 +37,30 @@ function Layout() {
                     element={
                         <ProtectedRoute>
                             <Dashboard />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/projects"
+                    element={
+                        <ProtectedRoute>
+                            <Projects />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/project/add"
+                    element={
+                        <ProtectedRoute>
+                            <AddProject />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/project/edit/:id"
+                    element={
+                        <ProtectedRoute>
+                            <EditProject />
                         </ProtectedRoute>
                     }
                 />

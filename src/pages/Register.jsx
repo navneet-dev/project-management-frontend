@@ -64,6 +64,7 @@ function Register() {
                     className="w-full border mt-1 bg-indigo-500/5 mb-2 border-gray-500/10 outline-none rounded py-2.5 px-3"
                     type="email"
                     placeholder="Email"
+                    value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
                 />
@@ -73,6 +74,7 @@ function Register() {
                     type="password"
                     placeholder="Password"
                     autoComplete="new-password"
+                    avlue={password}
                     onChange={(e) => setPassword(e.target.value)}
                     required
                 />

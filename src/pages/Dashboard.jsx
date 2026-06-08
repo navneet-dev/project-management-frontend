@@ -1,4 +1,3 @@
-// src/pages/Dashboard.jsx
 import DashboardLayout from "../components/DashboardLayout";
 import { FiUsers, FiShoppingCart, FiBell } from "react-icons/fi";
 import { GoProject } from "react-icons/go";
