@@ -14,6 +14,10 @@ import ProtectedRoute from "./components/ProtectedRoute.jsx";
 import Projects from "./pages/Projects.jsx";
 import AddProject from "./pages/AddProject.jsx";
 import EditProject from "./pages/EditProject.jsx";
+import Tasks from "./pages/Tasks.jsx";
+import AddTask from "./pages/AddTask.jsx";
+import EditTask from "./pages/EditTask.jsx";
+import ProjectDetails from "./pages/ProjectDetails.jsx";
 // import Projects from "./pages/Projects.jsx";
 // import Tasks from "./pages/Tasks.jsx";
 
@@ -61,6 +65,38 @@ function Layout() {
                     element={
                         <ProtectedRoute>
                             <EditProject />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/tasks"
+                    element={
+                        <ProtectedRoute>
+                            <Tasks />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/task/add"
+                    element={
+                        <ProtectedRoute>
+                            <AddTask />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/task/edit/:id"
+                    element={
+                        <ProtectedRoute>
+                            <EditTask />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/project-details/:id"
+                    element={
+                        <ProtectedRoute>
+                            <ProjectDetails />
                         </ProtectedRoute>
                     }
                 />

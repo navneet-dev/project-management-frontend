@@ -24,6 +24,7 @@ function Login() {
             const token = response.data.access_token;
             localStorage.setItem("token", token);
             // console.log("User data:", response.data.user);
+            localStorage.setItem("username", response.data.user.name);
 
             setMessage("Login successful!");
 

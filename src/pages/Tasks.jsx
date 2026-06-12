@@ -1,49 +1,47 @@
-import DashboardLayout from "../components/DashboardLayout";
 import { useEffect, useState } from "react";
-import instance from "../axios.js";
+import DashboardLayout from "../components/DashboardLayout";
+import instance from "../axios";
 import { Link } from "react-router-dom";
 
-export default function Projects() {
-    const [projects, setProjects] = useState([]);
+export default function Tasks() {
+    const [tasks, setTasks] = useState([]);
     const [loading, setLoading] = useState(true);
-    const [error, setError] = useState("");
+
     useEffect(() => {
-        const fetchProjects = async () => {
+        const fetchTasks = async () => {
             try {
                 const token = localStorage.getItem("token");
-                const response = await instance.get("/projects", {
+                const response = await instance.get("/tasks", {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
                 });
-                setProjects(response.data);
-            } catch (err) {
-                setError("Failed to fetch projects.", err.message);
+                setTasks(response.data);
+            } catch (error) {
+                setError("Failed to fetch tasks.", error.message);
             } finally {
                 setLoading(false);
             }
         };
 
-        fetchProjects();
+        fetchTasks();
     }, []);
 
     //delete project
     const handleDelete = async (id) => {
-        const deleteConfirmation = confirm(
-            "Do you want to delete this Project?",
-        );
+        const deleteConfirmation = confirm("Do you want to delete this Task?");
         if (!deleteConfirmation) return;
 
         try {
             const token = localStorage.getItem("token");
-            await instance.delete(`projects/${id}`, {
+            await instance.delete(`tasks/${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             });
 
-            setProjects(projects.filter((project) => project.id !== id));
-            alert("Project Deleted Successfully");
+            setTasks(tasks.filter((task) => task.id !== id));
+            alert("Task Deleted Successfully");
         } catch (e) {
             console.error("Unable to Delete", e);
         }
@@ -54,22 +52,20 @@ export default function Projects() {
             <div className="p-6 bg-gray-50 min-h-screen">
                 <div className="flex items-center justify-between mb-6">
                     <h1 className="text-2xl font-semibold text-gray-800 mb-6">
-                        Projects
+                        Tasks
                     </h1>
                     <Link
-                        to="/project/add"
+                        to="/task/add"
                         className="px-4 py-2 bg-green-500 text-white text-sm rounded hover:bg-green-600 transition"
                     >
-                        Add Project
+                        Add Task
                     </Link>
                 </div>
 
                 {loading ? (
-                    <p className="text-gray-500">Loading projects...</p>
-                ) : error ? (
-                    <p className="text-red-500">Error: {error}</p>
-                ) : projects.length === 0 ? (
-                    <p className="text-gray-500">No projects found.</p>
+                    <p className="text-gray-500">Loading tasks...</p>
+                ) : tasks.length === 0 ? (
+                    <p className="text-gray-500">No tasks found.</p>
                 ) : (
                     <div className="overflow-x-auto bg-white shadow-md rounded-lg">
                         <table className="min-w-full divide-y divide-gray-200">
@@ -79,7 +75,10 @@ export default function Projects() {
                                         S.No
                                     </th>
                                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                        Title
+                                        Project Name
+                                    </th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Task Name
                                     </th>
                                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         Description
@@ -88,45 +87,51 @@ export default function Projects() {
                                         Due Date
                                     </th>
                                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        Status
+                                    </th>
+                                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                         Actions
                                     </th>
                                 </tr>
                             </thead>
 
                             <tbody className="divide-y divide-gray-200">
-                                {projects.map((project, index) => (
+                                {tasks.map((task, index) => (
                                     <tr
-                                        key={project.id}
                                         className="hover:bg-gray-50"
+                                        key={task.id}
                                     >
                                         <td className="px-6 py-4 whitespace-nowrap">
                                             {index + 1}
                                         </td>
+                                        <td className="px-6 py-4 whitespace-nowrap">
+                                            {task.project.name}
+                                        </td>
                                         <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
-                                            {project.name}
+                                            {task.name}
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-gray-700">
-                                            {project.description}
+                                            {task.description}
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap text-gray-700">
-                                            {project.due_date}
+                                            {task.due_date}
+                                        </td>
+                                        <td className="px-6 py-4 whitespace-nowrap text-gray-700">
+                                            {task.status}
                                         </td>
                                         <td className="px-6 py-4 whitespace-nowrap flex gap-2">
-                                            <Link
-                                                to={`/project-details/${project.id}`}
-                                                className="px-3 py-1 bg-blue-500 text-white text-sm rounded hover:bg-blue-600 transition"
-                                            >
+                                            <button className="px-3 py-1 bg-blue-500 text-white text-sm rounded hover:bg-blue-600 transition">
                                                 View
-                                            </Link>
+                                            </button>
                                             <Link
-                                                to={`/project/edit/${project.id}`}
+                                                to={`/task/edit/${task.id}`}
                                                 className="px-3 py-1 bg-yellow-400 text-white text-sm rounded hover:bg-yellow-500 transition"
                                             >
                                                 Edit
                                             </Link>
                                             <button
                                                 onClick={() =>
-                                                    handleDelete(project.id)
+                                                    handleDelete(task.id)
                                                 }
                                                 className="px-3 py-1 bg-red-500 text-white text-sm rounded hover:bg-red-600 transition"
                                             >

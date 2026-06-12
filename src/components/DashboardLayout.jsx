@@ -14,6 +14,7 @@ export default function DashboardLayout({ children }) {
     const [sidebarOpen, setSidebarOpen] = useState(true);
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const navigate = useNavigate();
+    const username = localStorage.getItem("username");
 
     // Collapse sidebar by default on smaller screens
     useEffect(() => {
@@ -147,7 +148,7 @@ export default function DashboardLayout({ children }) {
                                 className="w-10 h-10 rounded-full border"
                             />
                             <span className="hidden md:flex items-center text-gray-700 font-medium gap-1">
-                                Welcome, John
+                                Welcome, {username}
                                 <FiChevronDown
                                     className={`transition-transform duration-200 ${
                                         dropdownOpen ? "rotate-180" : "rotate-0"
