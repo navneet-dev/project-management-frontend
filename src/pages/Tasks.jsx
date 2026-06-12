@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import DashboardLayout from "../components/DashboardLayout";
 import instance from "../axios";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function Tasks() {
     const [tasks, setTasks] = useState([]);
@@ -41,9 +42,11 @@ export default function Tasks() {
             });
 
             setTasks(tasks.filter((task) => task.id !== id));
-            alert("Task Deleted Successfully");
+            // alert("Task Deleted Successfully");
+            toast.success("Task Deleted Successfully!");
         } catch (e) {
             console.error("Unable to Delete", e);
+            toast.error("Unable to Delete", e);
         }
     };
 

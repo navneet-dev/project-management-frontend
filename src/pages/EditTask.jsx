@@ -2,6 +2,7 @@ import DashboardLayout from "../components/DashboardLayout";
 import { useEffect, useState } from "react";
 import instance from "../axios.js";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function EditTask() {
     const { id } = useParams();
@@ -69,11 +70,13 @@ export default function EditTask() {
                 },
             );
 
-            alert("Task updated successfully!");
+            // alert("Task updated successfully!");
+            toast.success("Task updated successfully!");
             navigate("/tasks");
         } catch (error) {
             console.error("Error updating task:", error);
-            alert("Failed to update task. Please try again.");
+            // alert("Failed to update task. Please try again.");
+            toast.error("Failed to updated task. Please try again.");
         } finally {
             setLoading(false);
         }

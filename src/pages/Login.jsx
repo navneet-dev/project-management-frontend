@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import instance from "../axios.js";
+import { toast } from "react-toastify";
 
 function Login() {
     const [email, setEmail] = useState("");
@@ -26,7 +27,9 @@ function Login() {
             // console.log("User data:", response.data.user);
             localStorage.setItem("username", response.data.user.name);
 
-            setMessage("Login successful!");
+            toast.success(response.data.message);
+
+            // setMessage("Login successful!");
 
             // You can redirect the user or perform other actions here
             navigate("/dashboard");
@@ -35,10 +38,11 @@ function Login() {
             //     "Login failed:",
             //     error.response?.data || error.message,
             // );
-            setMessage(
-                error.response?.data?.message ||
-                    "Login failed. Please try again.",
-            );
+            // setMessage(
+            //     error.response?.data?.message ||
+            //         "Login failed. Please try again.",
+            // );
+            toast.error(error.response?.data?.message);
         } finally {
             setLoading(false);
         }
@@ -83,9 +87,9 @@ function Login() {
                 >
                     {loading ? "Logging in..." : "Log in"}
                 </button>
-                {message && (
+                {/* {message && (
                     <p className="text-red-500 text-center mt-2">{message}</p>
-                )}
+                )} */}
                 <p className="text-center mt-4">
                     Don’t have an account?{" "}
                     <Link to="/register" className="text-blue-500 underline">

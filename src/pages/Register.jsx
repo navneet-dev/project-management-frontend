@@ -1,6 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import instance from "../axios.js";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 function Register() {
     const [name, setName] = useState("");
@@ -23,7 +24,8 @@ function Register() {
                 email,
                 password,
             });
-            setMessage("Registration successful!");
+            // setMessage("Registration successful!");
+            toast.success(response.data.message);
             // You can redirect the user or perform other actions here
             navigate("/login");
         } catch (error) {
@@ -31,10 +33,11 @@ function Register() {
             //     "Registration failed:",
             //     error.response?.data?.errors?.email[0] || error.message,
             // );
-            setMessage(
-                error.response?.data?.message ||
-                    "Registration failed. Please try again.",
-            );
+            // setMessage(
+            //     error.response?.data?.message ||
+            //         "Registration failed. Please try again.",
+            // );
+            toast.error(error.response?.data?.message);
         } finally {
             setLoading(false);
         }
@@ -87,9 +90,9 @@ function Register() {
                     {loading ? "Creating Account..." : "Create Account"}
                 </button>
 
-                {message && (
+                {/* {message && (
                     <p className="text-red-500 text-center mt-2">{message}</p>
-                )}
+                )} */}
 
                 <p className="text-center mt-4">
                     Already have an account?{" "}

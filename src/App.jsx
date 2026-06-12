@@ -18,6 +18,7 @@ import Tasks from "./pages/Tasks.jsx";
 import AddTask from "./pages/AddTask.jsx";
 import EditTask from "./pages/EditTask.jsx";
 import ProjectDetails from "./pages/ProjectDetails.jsx";
+import { ToastContainer } from "react-toastify";
 // import Projects from "./pages/Projects.jsx";
 // import Tasks from "./pages/Tasks.jsx";
 
@@ -103,6 +104,12 @@ function Layout() {
                 {/* <Route path="/projects" element={<Projects />} /> */}
                 {/* <Route path="/tasks" element={<Tasks />} /> */}
             </Routes>
+
+            <ToastContainer
+                position="top-right"
+                autoClose="4000"
+                hideProgressBar
+            />
         </>
     );
 }

@@ -39,6 +39,7 @@ export default function DashboardLayout({ children }) {
             console.log("Logged out successfully:", response.data.message);
             if (response.status === 200) {
                 localStorage.removeItem("token");
+                localStorage.removeItem("username");
                 navigate("/login");
             }
         } catch (error) {

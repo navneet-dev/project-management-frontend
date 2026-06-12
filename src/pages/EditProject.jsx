@@ -2,6 +2,7 @@ import DashboardLayout from "../components/DashboardLayout";
 import { useEffect, useState } from "react";
 import instance from "../axios.js";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function EditProject() {
     const { id } = useParams();
@@ -51,11 +52,13 @@ export default function EditProject() {
                 },
             );
 
-            alert("Project updated successfully!");
+            // alert("Project updated successfully!");
+            toast.success("Project updated successfully!");
             navigate("/projects");
         } catch (error) {
             console.error("Error updating project:", error);
-            alert("Failed to updated project. Please try again.");
+            // alert("Failed to updated project. Please try again.");
+            toast.error("Failed to updated project. Please try again.");
         } finally {
             setLoading(false);
         }

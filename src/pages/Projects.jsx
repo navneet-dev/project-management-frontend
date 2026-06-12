@@ -2,6 +2,7 @@ import DashboardLayout from "../components/DashboardLayout";
 import { useEffect, useState } from "react";
 import instance from "../axios.js";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function Projects() {
     const [projects, setProjects] = useState([]);
@@ -43,9 +44,11 @@ export default function Projects() {
             });
 
             setProjects(projects.filter((project) => project.id !== id));
-            alert("Project Deleted Successfully");
+            // alert("Project Deleted Successfully");
+            toast.success("Project Deleted Successfully!");
         } catch (e) {
             console.error("Unable to Delete", e);
+            toast.error("Unable to Delete", e);
         }
     };
 
