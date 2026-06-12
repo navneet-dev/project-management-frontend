@@ -84,6 +84,7 @@ export default function AddTask() {
                                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 p-2"
                                 onChange={(e) => setProjectId(e.target.value)}
                             >
+                                <option>--Select Project--</option>
                                 {projects.map((project) => (
                                     <option key={project.id} value={project.id}>
                                         {project.name}
