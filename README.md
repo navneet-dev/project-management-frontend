@@ -1,16 +1,81 @@
-# React + Vite
+# Frontend PM — Project Management App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern, lightweight frontend for a Project Management application built with React and Vite. It manages Projects and Tasks (full CRUD) and communicates with a Laravel 12 API backend using Axios.
 
-Currently, two official plugins are available:
+## Quick Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Frontend:** React + Vite
+- **Backend:** Laravel 12 API (separate repository)
+- **HTTP client:** Axios
+- **Features:** Create, Read, Update, Delete for Projects and Tasks; authentication-ready structure; client-side routing
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Projects: create, edit, list, delete
+- Tasks: create, edit, assign to projects, delete
+- Responsive UI with simple layout and navigation
+- Organized code structure: pages, components, context, services
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- React (JSX)
+- Vite (fast dev server & build)
+- Axios for API calls
+- Tailwind / CSS (project styles folder)
+
+## Prerequisites
+
+- Node.js 18+ and `npm` (or `yarn`)
+- Running Laravel 12 API backend (see backend repo for setup)
+
+## Setup & Run (Frontend)
+
+1. Install dependencies
+
+```
+npm install
+```
+
+2. Configure environment
+
+Create a `.env` (or `.env.local`) and set the API base URL used by the frontend. Example:
+
+```
+VITE_API_BASE_URL=http://localhost:8000/api
+```
+
+3. Start the dev server
+
+```
+npm run dev
+```
+
+4. Build for production
+
+```
+npm run build
+```
+
+## Backend (Laravel API)
+
+This frontend expects a Laravel 12 API that exposes RESTful endpoints for projects and tasks (for example `/api/projects`, `/api/tasks`). Ensure the backend is running and `VITE_API_BASE_URL` points to it.
+
+## Project Structure (important folders)
+
+- `src/pages` — route pages (Dashboard, Projects, Tasks, Auth)
+- `src/components` — shared UI components (Navbar, Layouts, ProtectedRoute)
+- `src/services` — Axios instance and API helper functions
+- `src/context` — React context for global state (auth, app state)
+- `src/assets` / `src/styles` — static assets and styles
+
+## Contributing
+
+Contributions are welcome. Open an issue or submit a PR with a clear description and tests or screenshots when applicable.
+
+## License
+
+MIT
+
+---
+
+If you want, I can also add an example `.env.example`, or update `src/services/axios.js` to show how `VITE_API_BASE_URL` is used.
