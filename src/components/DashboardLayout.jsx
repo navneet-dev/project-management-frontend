@@ -9,12 +9,13 @@ import {
     FiChevronDown,
 } from "react-icons/fi";
 import instance from "../axios.js";
+import { useAuth } from "../context/AuthContext.jsx";
 
 export default function DashboardLayout({ children }) {
     const [sidebarOpen, setSidebarOpen] = useState(true);
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const navigate = useNavigate();
-    const username = localStorage.getItem("username");
+    const { token, user, logout } = useAuth();
 
     // Collapse sidebar by default on smaller screens
     useEffect(() => {
@@ -25,7 +26,7 @@ export default function DashboardLayout({ children }) {
 
     //handle logout
     const handleLogout = async () => {
-        const token = localStorage.getItem("token");
+        // const token = localStorage.getItem("token");
         try {
             const response = await instance.post(
                 "/logout",
@@ -38,8 +39,9 @@ export default function DashboardLayout({ children }) {
             );
             console.log("Logged out successfully:", response.data.message);
             if (response.status === 200) {
-                localStorage.removeItem("token");
-                localStorage.removeItem("username");
+                // localStorage.removeItem("token");
+                // localStorage.removeItem("username");
+                logout();
                 navigate("/login");
             }
         } catch (error) {
@@ -149,7 +151,7 @@ export default function DashboardLayout({ children }) {
                                 className="w-10 h-10 rounded-full border"
                             />
                             <span className="hidden md:flex items-center text-gray-700 font-medium gap-1">
-                                Welcome, {username}
+                                Welcome, {user}
                                 <FiChevronDown
                                     className={`transition-transform duration-200 ${
                                         dropdownOpen ? "rotate-180" : "rotate-0"

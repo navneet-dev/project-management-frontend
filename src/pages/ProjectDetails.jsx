@@ -2,8 +2,10 @@ import React, { useEffect, useState } from "react";
 import DashboardLayout from "../components/DashboardLayout";
 import { useParams } from "react-router-dom";
 import instance from "../axios";
+import { useAuth } from "../context/AuthContext";
 
 export default function ProjectDetails() {
+    const { token } = useAuth();
     const { id } = useParams();
     const [projectDetails, setProjectDetails] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -12,7 +14,7 @@ export default function ProjectDetails() {
     useEffect(() => {
         const fetchProject = async () => {
             try {
-                const token = localStorage.getItem("token");
+                // const token = localStorage.getItem("token");
                 const response = await instance.get(`/projects/${id}`, {
                     headers: {
                         Authorization: `Bearer ${token}`,

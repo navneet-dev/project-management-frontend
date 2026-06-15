@@ -3,8 +3,10 @@ import { useEffect, useState } from "react";
 import instance from "../axios.js";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useAuth } from "../context/AuthContext";
 
 export default function EditProject() {
+    const { token } = useAuth();
     const { id } = useParams();
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
@@ -15,7 +17,7 @@ export default function EditProject() {
     useEffect(() => {
         const fetchProject = async () => {
             try {
-                const token = localStorage.getItem("token");
+                // const token = localStorage.getItem("token");
                 const response = await instance.get(`/projects/${id}`, {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -37,7 +39,7 @@ export default function EditProject() {
         setLoading(true);
 
         try {
-            const token = localStorage.getItem("token");
+            // const token = localStorage.getItem("token");
             await instance.put(
                 `/projects/${id}`,
                 {

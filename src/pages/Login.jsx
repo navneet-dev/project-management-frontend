@@ -2,12 +2,14 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import instance from "../axios.js";
 import { toast } from "react-toastify";
+import { useAuth } from "../context/AuthContext.jsx";
 
 function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState("");
     const [loading, setLoading] = useState(false);
+    const { login } = useAuth();
 
     const navigate = useNavigate();
 
@@ -23,9 +25,11 @@ function Login() {
             });
             // console.log("Login successful:", response.data.message);
             const token = response.data.access_token;
-            localStorage.setItem("token", token);
+
+            // localStorage.setItem("token", token);
             // console.log("User data:", response.data.user);
-            localStorage.setItem("username", response.data.user.name);
+            // localStorage.setItem("username", response.data.user.name);
+            login(token, response.data?.user.name);
 
             toast.success(response.data.message);
 

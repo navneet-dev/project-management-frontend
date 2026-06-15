@@ -3,8 +3,10 @@ import { useState } from "react";
 import instance from "../axios.js";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useAuth } from "../context/AuthContext";
 
 export default function AddProject() {
+    const { token, user } = useAuth();
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [dueDate, setDueDate] = useState("");
@@ -16,7 +18,7 @@ export default function AddProject() {
         setLoading(true);
 
         try {
-            const token = localStorage.getItem("token");
+            // const token = localStorage.getItem("token");
             await instance.post(
                 "/projects",
                 {

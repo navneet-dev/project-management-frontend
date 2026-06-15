@@ -3,15 +3,17 @@ import { useEffect, useState } from "react";
 import instance from "../axios.js";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useAuth } from "../context/AuthContext";
 
 export default function Projects() {
+    const { token } = useAuth();
     const [projects, setProjects] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState("");
     useEffect(() => {
         const fetchProjects = async () => {
             try {
-                const token = localStorage.getItem("token");
+                // const token = localStorage.getItem("token");
                 const response = await instance.get("/projects", {
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -36,7 +38,7 @@ export default function Projects() {
         if (!deleteConfirmation) return;
 
         try {
-            const token = localStorage.getItem("token");
+            // const token = localStorage.getItem("token");
             await instance.delete(`projects/${id}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
