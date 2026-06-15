@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import instance from "../axios.js";
 import { toast } from "react-toastify";
 import { useAuth } from "../context/AuthContext.jsx";
+import { loginService } from "../services/AuthService.jsx";
 
 function Login() {
     const [email, setEmail] = useState("");
@@ -19,10 +19,11 @@ function Login() {
         // console.log({ email, password });
         setLoading(true);
         try {
-            const response = await instance.post("/login", {
-                email,
-                password,
-            });
+            const response = await loginService({ email, password });
+            // const response = await instance.post("/login", {
+            //     email,
+            //     password,
+            // });
             // console.log("Login successful:", response.data.message);
             const token = response.data.access_token;
 

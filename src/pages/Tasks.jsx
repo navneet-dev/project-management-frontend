@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import DashboardLayout from "../components/DashboardLayout";
-import instance from "../axios";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAuth } from "../context/AuthContext";
+import { deleteTask, getTasks } from "../services/taskService";
 
 export default function Tasks() {
     const { token } = useAuth();
@@ -13,12 +13,7 @@ export default function Tasks() {
     useEffect(() => {
         const fetchTasks = async () => {
             try {
-                // const token = localStorage.getItem("token");
-                const response = await instance.get("/tasks", {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
+                const response = await getTasks(token);
                 setTasks(response.data);
             } catch (error) {
                 setError("Failed to fetch tasks.", error.message);
@@ -36,19 +31,12 @@ export default function Tasks() {
         if (!deleteConfirmation) return;
 
         try {
-            // const token = localStorage.getItem("token");
-            await instance.delete(`tasks/${id}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-
+            await deleteTask(id, token);
             setTasks(tasks.filter((task) => task.id !== id));
-            // alert("Task Deleted Successfully");
             toast.success("Task Deleted Successfully!");
         } catch (e) {
-            console.error("Unable to Delete", e);
-            toast.error("Unable to Delete", e);
+            console.error("Unable to Delete Task", e);
+            toast.error("Unable to Delete Task", e);
         }
     };
 

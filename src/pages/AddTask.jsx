@@ -1,9 +1,10 @@
 import DashboardLayout from "../components/DashboardLayout";
 import { useEffect, useState } from "react";
-import instance from "../axios.js";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAuth } from "../context/AuthContext";
+import { getAllProjects } from "../services/ProjectService.jsx";
+import { createTask } from "../services/taskService.jsx";
 
 export default function AddTask() {
     const { token } = useAuth();
@@ -18,12 +19,7 @@ export default function AddTask() {
     useEffect(() => {
         const fetchProjects = async () => {
             try {
-                // const token = localStorage.getItem("token");
-                const response = await instance.get("/projects", {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
+                const response = await getAllProjects(token);
                 setProjects(response.data);
             } catch (err) {
                 setError("Failed to fetch projects.", err.message);
@@ -40,9 +36,7 @@ export default function AddTask() {
         setLoading(true);
 
         try {
-            // const token = localStorage.getItem("token");
-            await instance.post(
-                "/tasks",
+            await createTask(
                 {
                     name: title,
                     description: description,
@@ -50,14 +44,9 @@ export default function AddTask() {
                     project_id: projectId,
                     status: "pending",
                 },
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                },
+                token,
             );
 
-            // alert("Task added successfully!");
             toast.success("Task added successfully!");
             navigate("/tasks");
         } catch (error) {

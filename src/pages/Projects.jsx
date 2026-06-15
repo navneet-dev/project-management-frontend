@@ -1,9 +1,9 @@
 import DashboardLayout from "../components/DashboardLayout";
 import { useEffect, useState } from "react";
-import instance from "../axios.js";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAuth } from "../context/AuthContext";
+import { deleteProject, getAllProjects } from "../services/ProjectService.jsx";
 
 export default function Projects() {
     const { token } = useAuth();
@@ -13,12 +13,7 @@ export default function Projects() {
     useEffect(() => {
         const fetchProjects = async () => {
             try {
-                // const token = localStorage.getItem("token");
-                const response = await instance.get("/projects", {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
+                const response = await getAllProjects(token);
                 setProjects(response.data);
             } catch (err) {
                 setError("Failed to fetch projects.", err.message);
@@ -38,15 +33,8 @@ export default function Projects() {
         if (!deleteConfirmation) return;
 
         try {
-            // const token = localStorage.getItem("token");
-            await instance.delete(`projects/${id}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-
+            await deleteProject(id, token);
             setProjects(projects.filter((project) => project.id !== id));
-            // alert("Project Deleted Successfully");
             toast.success("Project Deleted Successfully!");
         } catch (e) {
             console.error("Unable to Delete", e);

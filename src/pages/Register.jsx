@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
-import instance from "../axios.js";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { registerService } from "../services/AuthService";
 
 function Register() {
     const [name, setName] = useState("");
@@ -16,14 +16,16 @@ function Register() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         // Handle registration logic here
-        // You can collect form data and send it to the backend using instance.post("/register", { ... })
+
         setLoading(true);
         try {
-            const response = await instance.post("/register", {
-                name,
-                email,
-                password,
-            });
+            // const response = await instance.post("/register", {
+            //     name,
+            //     email,
+            //     password,
+            // });
+
+            const response = await registerService({ name, email, password });
             // setMessage("Registration successful!");
             toast.success(response.data.message);
             // You can redirect the user or perform other actions here

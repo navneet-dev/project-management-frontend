@@ -25,25 +25,11 @@ export default function DashboardLayout({ children }) {
     }, []);
 
     //handle logout
-    const handleLogout = async () => {
+    const handleLogout = () => {
         // const token = localStorage.getItem("token");
         try {
-            const response = await instance.post(
-                "/logout",
-                {},
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                },
-            );
-            console.log("Logged out successfully:", response.data.message);
-            if (response.status === 200) {
-                // localStorage.removeItem("token");
-                // localStorage.removeItem("username");
-                logout();
-                navigate("/login");
-            }
+            logout();
+            navigate("/login");
         } catch (error) {
             console.error(
                 "Logout failed:",

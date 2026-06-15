@@ -1,9 +1,10 @@
 import DashboardLayout from "../components/DashboardLayout";
 import { useEffect, useState } from "react";
-import instance from "../axios.js";
 import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useAuth } from "../context/AuthContext";
+import { getAllProjects } from "../services/ProjectService.jsx";
+import { getSingleTask, updateTask } from "../services/taskService.jsx";
 
 export default function EditTask() {
     const { token } = useAuth();
@@ -20,22 +21,12 @@ export default function EditTask() {
     useEffect(() => {
         const fetchTaskAndProject = async () => {
             try {
-                // const token = localStorage.getItem("token");
-
                 //get all projects
-                const projectResponse = await instance.get("/projects", {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
+                const projectResponse = await getAllProjects(token);
                 setProjects(projectResponse.data);
 
-                //get task
-                const taskResponse = await instance.get(`/tasks/${id}`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                });
+                //get a task
+                const taskResponse = await getSingleTask(id, token);
                 setTitle(taskResponse.data.name);
                 setDescription(taskResponse.data.description);
                 setDueDate(taskResponse.data.due_date);
@@ -55,9 +46,8 @@ export default function EditTask() {
         setLoading(true);
 
         try {
-            // const token = localStorage.getItem("token");
-            await instance.put(
-                `/tasks/${id}`,
+            await updateTask(
+                id,
                 {
                     name: title,
                     description: description,
@@ -65,11 +55,7 @@ export default function EditTask() {
                     project_id: projectId,
                     status: status,
                 },
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                },
+                token,
             );
 
             // alert("Task updated successfully!");
