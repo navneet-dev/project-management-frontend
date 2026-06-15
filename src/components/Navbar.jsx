@@ -7,7 +7,7 @@ function Navbar() {
     return (
         <div className="text-sm text-white w-full">
             {/* Top Banner */}
-            <div className="text-center font-medium py-2 bg-gradient-to-r from-violet-500 via-[#9938CA] to-[#E0724A]">
+            <div className="text-center font-medium py-2 bg-gradient-to-r from-violet-500 via-[#9938CA] to-[#E0724A] hidden">
                 <p>
                     Exclusive Price Drop! Hurry,{" "}
                     <span className="underline underline-offset-2">
