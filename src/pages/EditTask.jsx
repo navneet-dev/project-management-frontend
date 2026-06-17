@@ -14,7 +14,7 @@ export default function EditTask() {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [dueDate, setDueDate] = useState("");
-    const [status, setStatus] = useState("pending");
+    const [status, setStatus] = useState("");
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
@@ -31,6 +31,7 @@ export default function EditTask() {
                 setDescription(taskResponse.data.description);
                 setDueDate(taskResponse.data.due_date);
                 setProjectId(taskResponse.data.project_id);
+                setStatus(taskResponse.data.status);
             } catch (err) {
                 console.error("Failed to fetch projects.", err.message);
             } finally {
@@ -86,6 +87,7 @@ export default function EditTask() {
                             <select
                                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 p-2"
                                 onChange={(e) => setProjectId(e.target.value)}
+                                value={projectId}
                             >
                                 <option>--Select Project--</option>
                                 {projects.map((project) => (
@@ -147,6 +149,7 @@ export default function EditTask() {
                             <select
                                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring focus:ring-blue-200 p-2"
                                 onChange={(e) => setStatus(e.target.value)}
+                                value={status}
                             >
                                 <option>--Select Status--</option>
                                 <option value="pending">Pending</option>
